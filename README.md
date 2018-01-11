@@ -12,4 +12,4 @@ npm start
 
 
 ## Partner repo
-[roller-coaster-backend]()
+[roller-coaster-backend](https://github.com/rogerwschmidt/roller-coaster-backend)
