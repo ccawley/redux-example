@@ -1,9 +1,20 @@
 export const FETCH_ROLLER_COASTERS_STARTED = 'FETCH_ROLLER_COASTERS_STARTED'
 export const FETCH_ROLLER_COASTERS_SUCCESS = 'FETCH_ROLLER_COASTERS_SUCCESS'
 export const FETCH_ROLLER_COASTERS_ERROR = 'FETCH_ROLLER_COASTERS_ERROR'
-export const ADD_ROLLER_COASTER = 'ADD_ROLLER_COASTER'
-export const DELETE_ROLLER_COASTER = 'DELETE_ROLLER_COASTER'
-export const UPDATE_ROLLER_COASTER = 'UPDATE_ROLLER_COASTER'
+
+export const POST_ROLLER_COASTER_STARTED = 'POST_ROLLER_COASTER_STARTED'
+export const POST_ROLLER_COASTER_SUCCESS = 'POST_ROLLER_COASTER_STARTED'
+export const POST_ROLLER_COASTER_ERROR = 'POST_ROLLER_COASTER_ERROR'
+
+export const DELETE_ROLLER_COASTER_STARTED = 'DELETE_ROLLER_COASTER_STARTED'
+export const DELETE_ROLLER_COASTER_SUCCESS = 'DELETE_ROLLER_COASTER_SUCCESS'
+export const DELETE_ROLLER_COASTER_ERROR = 'DELETE_ROLLER_COASTER_ERROR'
+
+export const PUT_ROLLER_COASTER_STARTED = 'PUT_ROLLER_COASTER_STARTED'
+export const PUT_ROLLER_COASTER_SUCCESS = 'PUT_ROLLER_COASTER_SUCCESS'
+export const PUT_ROLLER_COASTER_ERROR = 'PUT_ROLLER_COASTER_ERROR'
+
+
 export const UPDATE_ROW = 'UPDATE_ROW'
 
 export function getRollerCoasters(){
@@ -11,7 +22,7 @@ export function getRollerCoasters(){
     dispatch({ type: FETCH_ROLLER_COASTERS_STARTED })
     const res = await request('/api/rollerCoasters')
     if(!res.ok){
-      dispatch({type: FETCH_ROLLER_COASTERS_ERROR, payload: 'Could not fetch coasters'})
+      dispatch({type: FETCH_ROLLER_COASTERS_ERROR })
     }
     else{
       const json = await res.json()
@@ -26,12 +37,14 @@ export function getRollerCoasters(){
 
 export function addRollerCoaster(coaster){
   return async (dispatch) => {
+    dispatch({type: POST_ROLLER_COASTER_STARTED})
     const res = await request('/api/rollerCoasters', 'POST', coaster)
     if(!res.ok){
       console.log('Bad Request')
-      // dispatch error
+      dispatch({type: POST_ROLLER_COASTER_ERROR })
     }
     else {
+      dispatch({type: POST_ROLLER_COASTER_SUCCESS })
       dispatch(getRollerCoasters());
     }
   }
@@ -39,12 +52,14 @@ export function addRollerCoaster(coaster){
 
 export function deleteRollerCoaster(coasterId){
   return async (dispatch) => {
+    dispatch({type: DELETE_ROLLER_COASTER_STARTED })
     const res = await request(`/api/rollerCoasters/${coasterId}`, 'DELETE')
     if(!res.ok){
       console.log('Bad Request')
-      // dispatch error
+      dispatch({type: DELETE_ROLLER_COASTER_ERROR })
     }
     else {
+      dispatch({type: DELETE_ROLLER_COASTER_SUCCESS })
       dispatch(getRollerCoasters());
     }
   }
@@ -52,12 +67,14 @@ export function deleteRollerCoaster(coasterId){
 
 export function updateRollerCoaster(coaster){
   return async (dispatch) => {
+    dispatch({type: PUT_ROLLER_COASTER_STARTED })
     const res = await request(`/api/rollerCoasters/${coaster.id}`, 'PUT', coaster)
     if(!res.ok){
       console.log('Bad Request')
-      // dispatch error
+      dispatch({type: PUT_ROLLER_COASTER_ERROR })
     }
     else {
+      dispatch({type: PUT_ROLLER_COASTER_SUCCESS })
       dispatch(updateRow(null))
       dispatch(getRollerCoasters());
     }
