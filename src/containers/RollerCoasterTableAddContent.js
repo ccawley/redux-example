@@ -23,6 +23,7 @@ class RollerCoasterTableAddContent extends Component{
   }
 
   handleNewRollerCoaster(){
+    // handle validation here
     this.props.addRollerCoaster(this.state)
     this.setState({ name:'', park:'', city:'', state:'' })
   }
