@@ -23,13 +23,14 @@ export function getRollerCoasters(){
     const res = await request('/api/rollerCoasters')
     if(!res.ok){
       dispatch({type: FETCH_ROLLER_COASTERS_ERROR })
+      // callback such that caller can define error behavior
     }
     else{
       const json = await res.json()
 
       dispatch({
         type: FETCH_ROLLER_COASTERS_SUCCESS,
-        payload: json.roller_coasters
+        payload: json.roller_coasters.sort((a,b) => a.id - b.id)
       })
     }
   }
@@ -42,6 +43,7 @@ export function addRollerCoaster(coaster){
     if(!res.ok){
       console.log('Bad Request')
       dispatch({type: POST_ROLLER_COASTER_ERROR })
+      // callback such that caller can define error behavior
     }
     else {
       dispatch({type: POST_ROLLER_COASTER_SUCCESS })
@@ -57,6 +59,7 @@ export function deleteRollerCoaster(coasterId){
     if(!res.ok){
       console.log('Bad Request')
       dispatch({type: DELETE_ROLLER_COASTER_ERROR })
+      // callback such that caller can define error behavior
     }
     else {
       dispatch({type: DELETE_ROLLER_COASTER_SUCCESS })
@@ -72,6 +75,7 @@ export function updateRollerCoaster(coaster){
     if(!res.ok){
       console.log('Bad Request')
       dispatch({type: PUT_ROLLER_COASTER_ERROR })
+      // callback such that caller can define error behavior
     }
     else {
       dispatch({type: PUT_ROLLER_COASTER_SUCCESS })

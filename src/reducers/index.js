@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux'
-import _ from 'lodash'
 
 import {  FETCH_ROLLER_COASTERS_SUCCESS,
           UPDATE_ROW,
