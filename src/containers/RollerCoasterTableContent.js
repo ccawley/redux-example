@@ -1,29 +1,43 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import RollerCoasterTableContentRowData from './RollerCoasterTableContentRowData'
 import RollerCoasterTableContentUpdate from './RollerCoasterTableContentUpdate'
 
-function RollerCoasterTableBody (props){
-  const { roller_coasters, row_being_edited } = props
-  return (
-    <tbody>
-      {
-        roller_coasters.map((e,i) =>
-          row_being_edited === e.id ?
-          <RollerCoasterTableContentUpdate key={i} {...e} /> :
-          <RollerCoasterTableContentRowData key={i} {...e} /> )
-      }
-    </tbody>
-  )
+class RollerCoasterTableBody extends Component{
+  constructor(props){
+    super(props)
 
-}
+    this.state = {
+      rowBeingEdited: null
+    }
+  }
 
-function mapStateToProps(state, ownProps){
-  return {
-    roller_coasters: state.roller_coasters,
-    row_being_edited: state.row_to_update
+  rowToEdit = (rowBeingEdited) => {
+    this.setState({ rowBeingEdited })
+  }
+
+  render = () => {
+    return (
+      <tbody>
+        {
+          this.props.rollerCoasters.map((rollerCoaster,i) =>
+          this.state.rowBeingEdited === rollerCoaster.id ?
+          <RollerCoasterTableContentUpdate
+            key={i}
+            rowToEdit={this.rowToEdit}
+            rollerCoaster={rollerCoaster}
+            updateRollerCoaster={this.props.updateRollerCoaster} /> :
+          <RollerCoasterTableContentRowData
+            key={i}
+            rowToEdit={this.rowToEdit}
+            deleteRollerCoaster={this.props.deleteRollerCoaster}
+            rollerCoaster={rollerCoaster} />
+          )
+        }
+      </tbody>
+    )
   }
 }
 
-export default connect(mapStateToProps)(RollerCoasterTableBody)
+export default RollerCoasterTableBody

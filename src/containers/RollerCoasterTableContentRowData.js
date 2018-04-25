@@ -4,7 +4,10 @@ import { bindActionCreators } from 'redux'
 import { updateRow, deleteRollerCoaster } from '../actions'
 
 function RollerCoasterTableContentRowData(props){
-  const { id, name, park, city, state, updateRow, deleteRollerCoaster } = props
+  const { rollerCoaster, rowToEdit, deleteRollerCoaster } = props
+
+  const { id, name, park, city, state } = rollerCoaster
+
   return (
     <tr>
       <td>{id}</td>
@@ -14,14 +17,14 @@ function RollerCoasterTableContentRowData(props){
       <td>{state}</td>
       <td>
         <span
-          onClick={() => updateRow(id)}
+          onClick={() => rowToEdit(id)}
           className='btn btn-primary btn-block'>
           Edit
         </span>
       </td>
       <td>
         <span
-          onClick={() => deleteRollerCoaster(id)}
+          onClick={() => deleteRollerCoaster(rollerCoaster)}
           className='btn btn-danger btn-block'>
           Delete
         </span>
@@ -30,8 +33,6 @@ function RollerCoasterTableContentRowData(props){
   )
 }
 
-function mapDispatchToProps(dispatch){
-  return bindActionCreators({updateRow, deleteRollerCoaster}, dispatch)
-}
 
-export default connect(null, mapDispatchToProps)(RollerCoasterTableContentRowData)
+
+export default RollerCoasterTableContentRowData

@@ -8,8 +8,8 @@ class RollerCoasterTableUpdateContent extends Component{
 
   constructor(props){
     super(props)
-
-    const { id, name, park, city, state } = this.props
+    console.log(props)
+    const { id, name, park, city, state } = this.props.rollerCoaster
 
     this.state = { id, name, park, city, state }
     this.handleChange = this.handleChange.bind(this)
@@ -21,6 +21,11 @@ class RollerCoasterTableUpdateContent extends Component{
     if(this.state.hasOwnProperty(name)){
       this.setState( { [name]:value } )
     }
+  }
+
+  updateRollerCoaster = (rollerCoaster) => {
+    this.props.updateRollerCoaster(rollerCoaster)
+    this.props.rowToEdit(null)
   }
 
   render(){
@@ -57,14 +62,14 @@ class RollerCoasterTableUpdateContent extends Component{
         </td>
         <td>
           <button
-            onClick={ () => this.props.updateRollerCoaster(this.state) }
+            onClick={ () => this.updateRollerCoaster(this.state) }
             className='btn btn-primary btn-block'>
             Update
           </button>
         </td>
         <td>
           <button
-            onClick={ () => this.props.updateRow(null) }
+            onClick={ () => this.props.rowToEdit(null) }
             className='btn btn-danger btn-block'>
             Cancel
           </button>
@@ -74,8 +79,4 @@ class RollerCoasterTableUpdateContent extends Component{
   }
 }
 
-function mapDispatchToProps(dispatch){
-  return bindActionCreators({updateRow, updateRollerCoaster}, dispatch)
-}
-
-export default connect(null, mapDispatchToProps)(RollerCoasterTableUpdateContent)
+export default RollerCoasterTableUpdateContent

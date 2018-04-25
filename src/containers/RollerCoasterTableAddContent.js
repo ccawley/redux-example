@@ -14,7 +14,7 @@ class RollerCoasterTableAddContent extends Component{
     this.handleNewRollerCoaster = this.handleNewRollerCoaster.bind(this)
   }
 
-  handleChange(event){
+  handleChange = (event) => {
     const {target: {name, value} } = event
 
     if(this.state.hasOwnProperty(name)){
@@ -22,7 +22,7 @@ class RollerCoasterTableAddContent extends Component{
     }
   }
 
-  handleNewRollerCoaster(){
+  handleNewRollerCoaster = () => {
     // handle validation here
     this.props.addRollerCoaster(this.state)
     this.setState({ name:'', park:'', city:'', state:'' })
@@ -58,8 +58,4 @@ class RollerCoasterTableAddContent extends Component{
   }
 }
 
-function mapDispatchToProps(dispatch){
-  return bindActionCreators({addRollerCoaster}, dispatch)
-}
-
-export default connect(null,mapDispatchToProps)(RollerCoasterTableAddContent)
+export default RollerCoasterTableAddContent
